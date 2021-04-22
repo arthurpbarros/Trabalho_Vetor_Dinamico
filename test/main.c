@@ -14,12 +14,14 @@ int main(void) {
     printArray(a);
     array_push_back(a, 30);
     array_push_back(a, 12);
-    array_push_back(a, 24);
     array_push_back(a, 36);
     printArray(a);
+    printf("%d\n",array_get(a,6));
     printf("%u\n",array_size(a));
     printf("%.2lf\n",array_percent_occuped(a));
-    a = array_destroy(a);
-    //a = NULL;
+    array_destroy(a);
+    if(a){
+        printf("NULL\n");
+    }
     printf("%p\n",a);
 }

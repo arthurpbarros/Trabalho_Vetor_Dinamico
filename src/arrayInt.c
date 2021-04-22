@@ -17,7 +17,7 @@ void printArray(array_int * a){
 
 array_int * array_create(unsigned int initial_capacity){
     //Aloca o struct do vetor dinâmico.
-    array_int * v = malloc(sizeof(array_int));
+    array_int * v = (array_int*)malloc(sizeof(array_int));
     //Verifica se o struct foi alocado dinâmicamente. 
     if (v == NULL){
         printf("Memória insuficiente para alocar vetor dinâmico!\n");
@@ -79,6 +79,7 @@ unsigned int array_pop_back(array_int * TIPO){
         new_data[i] = TIPO->data[i];
     }
     //Libera memória dos elementos originais, isto é,  apaga todos.
+    free(TIPO->data);
     TIPO->data = new_data;
     //Diminui o tamanho do vetor e o retorna em sequência
     return --TIPO->size;
@@ -97,6 +98,6 @@ double array_percent_occuped(array_int * TIPO){
 }
 void array_destroy(array_int * TIPO){
     free(TIPO->data);
-    free(TIPO);
+    TIPO->size = 0;
     TIPO = NULL;
 }
