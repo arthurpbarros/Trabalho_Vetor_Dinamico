@@ -69,7 +69,7 @@ unsigned int array_push_back(array_int * TIPO, int i){
 }
 
 unsigned int array_pop_back(array_int * TIPO){
-    if(TIPO->size == 0){
+    if(TIPO->size <= 0){
         return 0;
     }
     int * new_data = (int*)malloc(TIPO->capacity*sizeof(int));
@@ -85,6 +85,47 @@ unsigned int array_pop_back(array_int * TIPO){
     return --TIPO->size;
 }
 
+int array_find(array_int * TIPO, int element){
+    if(TIPO->size <= 0){
+        return -1;
+    }
+    int i;
+    for(int i = 0; i < TIPO->size;i++){
+        if(TIPO->data[i] == element){
+            return i;   //Retorna o menor índice, onde encontra o elemento no array
+        }
+    }
+    //Não encontrou o elemento no array
+    return -1; 
+}
+
+int array_insert_at(array_int * TIPO, int index, int value){
+    //Indice inválido
+    if(index < 0 || index >= TIPO->size){
+        return TIPO->capacity;
+    }
+    //Indice válido
+    TIPO->data[index] = value;
+    return TIPO->capacity;
+}
+
+int array_remove_from(array_int * TIPO, int index){
+    //Indice inválido
+    if(index < 0 || index >= TIPO->size){
+        return TIPO->size;
+    }
+    //Indice válido
+    // v = [1,2,3]
+    // remove 1 -> v[1,3];
+    int i;
+    for(i = index+1;i < TIPO->size;i++){
+        TIPO->data[i-1] = TIPO->data[i];
+    }
+    TIPO->size--;
+    TIPO->data[TIPO->size] = -1;
+    return TIPO->capacity;
+}
+
 unsigned int array_size(array_int * TIPO){
     return TIPO->size;
 }
@@ -96,8 +137,11 @@ unsigned int array_capacity(array_int * TIPO){
 double array_percent_occuped(array_int * TIPO){
     return (1.0*TIPO->size) / TIPO->capacity;
 }
+
+//TIPO tem o endereço do vetor
+//end pointer recebe o endereco de TIPO
 void array_destroy(array_int * TIPO){
-    free(TIPO->data);
-    TIPO->size = 0;
+    array_int ** old = &(TIPO);
     TIPO = NULL;
+    free (*old);
 }

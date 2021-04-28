@@ -15,13 +15,15 @@ int main(void) {
     array_push_back(a, 30);
     array_push_back(a, 12);
     array_push_back(a, 36);
+    array_push_back(a, 14);
+
+    //array_insert_at(a,2,3);
+    array_remove_from(a,0);
+
     printArray(a);
     printf("%d\n",array_get(a,6));
     printf("%u\n",array_size(a));
     printf("%.2lf\n",array_percent_occuped(a));
-    array_destroy(a);
-    if(a){
-        printf("NULL\n");
-    }
-    printf("%p\n",a);
+    printf("%d\n",array_find(a,14));
+    
 }

@@ -74,6 +74,36 @@ unsigned int array_pop_back(array_int * TIPO);
  *
  */
 unsigned int array_size(array_int * TIPO);
+/*
+∗ Function: int TIPO_find(TIPO_int ∗ TIPO, int element);
+∗
+∗ Description: Gets the index of element 'element'.
+∗
+∗ Return: The index of element 'element' if element is in the range [0..size−1].
+∗
+*/
+int array_find(array_int * TIPO, int element);
+/**
+ * Function: int TIPO_insert_at(TIPO_int * TIPO, int index, int value);
+ *
+ * Description: Inserts int value 'value' at index 'index'. 'index' must
+ *              be a valid index, between 0 and 'TIPO_size'-1.
+ *
+ * Return: the value index, if insertion ok or -1 if the insertion could
+ *         not be done.
+ *
+ */
+int array_insert_at(array_int * TIPO, int index, int value);
+/**
+ * Function: TIPO_remove_from(TIPO_int * TIPO, int index);
+ *
+ * Description: Removes the value at index 'index'. 'index' must
+ *              be a valid index, between 0 and 'TIPO_size'-1.
+ *
+ * Return: The size of the new TIPO_int.
+ *
+ */
+int array_remove_from(array_int * TIPO, int index);
 /**
  * Function: unsigned int TIPO_capacity(TIPO_int * TIPO);
  *
