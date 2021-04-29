@@ -18,7 +18,9 @@ int main(void) {
     array_push_back(a, 14);
 
     //array_insert_at(a,2,3);
-    array_remove_from(a,0);
+    printf("IA: %d\n",array_insert_at(a,2,3));
+    printArray(a);
+    printf("RF: %d\n",array_remove_from(a,0));
 
     printArray(a);
     printf("%d\n",array_get(a,6));

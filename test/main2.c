@@ -6,12 +6,7 @@ int main(void) {
     list_push_back(l,6);
     list_push_back(l,3);
     list_push_back(l,-9);
-    list_pop_back(l);
-    list_pop_back(l);
-    list_pop_back(l);
-    list_push_back(l,5);
-    list_push_back(l,825);
-    list_push_back(l,320);
-    printf("%d\n",list_find(l,320));
+    printArray(l);
+    list_int_destroy(l);
     printArray(l);
 }

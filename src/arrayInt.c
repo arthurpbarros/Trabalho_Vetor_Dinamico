@@ -1,7 +1,7 @@
 #include "../include/arrayInt.h"
 
 void printArray(array_int * a){
-    if(a != NULL){
+    if(a){
         printf("INITIAL CAPACITY: %d\nCAPACITY: %d\nSIZE: %d\n",a->i_cap,a->capacity,a->size);
         int i;
         printf("DADOS DO ARRAY\n");
@@ -19,16 +19,16 @@ array_int * array_create(unsigned int initial_capacity){
     //Aloca o struct do vetor dinâmico.
     array_int * v = (array_int*)malloc(sizeof(array_int));
     //Verifica se o struct foi alocado dinâmicamente. 
-    if (v == NULL){
+    if (!v){
         printf("Memória insuficiente para alocar vetor dinâmico!\n");
-        return NULL;
+        return 0;
     }
     //Aloca o espaço para os dados(elementos) do vetor dinâmico com capacidade inicial igual ao paramêtro passado.
     v->data = (int*) malloc(initial_capacity*sizeof(int));
     //Verifica se os espaço inicial destinado aos elementos do vetor foi alocado.
-    if (v->data == NULL){
+    if (!v->data){
         printf("Memória insuficiente para alocar os dados do vetor dinâmico!\n");
-        return NULL;
+        return 0;
     }
     //Inicializa os demais atributos do vetor dinâmico.
     v->size = 0;
@@ -59,7 +59,7 @@ unsigned int array_push_back(array_int * TIPO, int i){
             new_data = (int *)realloc(TIPO->data,TIPO->capacity+10);
             TIPO->capacity = TIPO->capacity+10;
         }
-        if(new_data == NULL){
+        if(!new_data){
             printf("Memória insuficiente para adicionar o elemento '%d' no vetor dinâmico.\n",i);
             return TIPO->size;
         }
@@ -86,6 +86,7 @@ unsigned int array_pop_back(array_int * TIPO){
 }
 
 int array_find(array_int * TIPO, int element){
+    //Se a lista está vazia, retorne -1
     if(TIPO->size <= 0){
         return -1;
     }
@@ -95,46 +96,48 @@ int array_find(array_int * TIPO, int element){
             return i;   //Retorna o menor índice, onde encontra o elemento no array
         }
     }
-    //Não encontrou o elemento no array
+    //Não encontrou o elemento no array, retorna -1
     return -1; 
 }
 
 int array_insert_at(array_int * TIPO, int index, int value){
     //Indice inválido
     if(index < 0 || index >= TIPO->size){
-        return TIPO->capacity;
+        return -1;
     }
-    //Indice válido
+    //Se o índice for válido, insere o valor no vetor
     TIPO->data[index] = value;
-    return TIPO->capacity;
+    return index;   //retorna índice do elemento inserido
 }
 
 int array_remove_from(array_int * TIPO, int index){
-    //Indice inválido
+    //Verifica se o índice é inválido
     if(index < 0 || index >= TIPO->size){
         return TIPO->size;
     }
-    //Indice válido
-    // v = [1,2,3]
-    // remove 1 -> v[1,3];
+    //Indice válido, desloca elementos a direita de index para a esquerda, 
+    //substituindo o valor de index pelo próximo
     int i;
     for(i = index+1;i < TIPO->size;i++){
         TIPO->data[i-1] = TIPO->data[i];
     }
-    TIPO->size--;
-    TIPO->data[TIPO->size] = -1;
-    return TIPO->capacity;
+    TIPO->size--; //Reduz tamanho do vetor em 1
+    TIPO->data[TIPO->size] = -1; //Inutitiliza valor do último elemento
+    return TIPO->size; //Returna o novo tamanho
 }
 
 unsigned int array_size(array_int * TIPO){
+    //Retorna tamanho
     return TIPO->size;
 }
 
 unsigned int array_capacity(array_int * TIPO){
+    //Retorna capacidade
     return TIPO->capacity;
 }
 
 double array_percent_occuped(array_int * TIPO){
+    //Retorna percentual ocupado do array, seu tamanho/capacidade entre 0 a 1
     return (1.0*TIPO->size) / TIPO->capacity;
 }
 
@@ -142,6 +145,6 @@ double array_percent_occuped(array_int * TIPO){
 //end pointer recebe o endereco de TIPO
 void array_destroy(array_int * TIPO){
     array_int ** old = &(TIPO);
-    TIPO = NULL;
+    TIPO = 0;
     free (*old);
 }
